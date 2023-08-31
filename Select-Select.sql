@@ -44,3 +44,21 @@ WHERE x.name <= ALL(SELECT y.name FROM world y
 ORDER BY continent;
 
 -- #9
+
+SELECT name, continent, population 
+FROM world x 
+WHERE population = ALL(SELECT population 
+                        FROM world y 
+                        WHERE y.continent = x.continent 
+                        AND population <= 25000000);
+
+-- #10
+
+-- MySQL
+
+SELECT x.name, x.continent
+  FROM world x
+  WHERE x.population > ALL(SELECT population*3
+                            FROM world y
+                            WHERE y.continent = x.continent
+                            AND x.name != y.name)
